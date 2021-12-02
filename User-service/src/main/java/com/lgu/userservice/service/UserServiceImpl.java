@@ -1,0 +1,42 @@
+package com.lgu.userservice.service;
+
+import com.lgu.userservice.dto.UserDto;
+import com.lgu.userservice.jpa.UserEntity;
+import com.lgu.userservice.jpa.UserRepository;
+import com.lgu.userservice.security.WebSecurity;
+import org.modelmapper.ModelMapper;
+import org.modelmapper.convention.MatchingStrategies;
+import org.modelmapper.spi.MatchingStrategy;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.stereotype.Service;
+
+import java.util.UUID;
+
+@Service
+public class UserServiceImpl implements UserService {
+    UserRepository userRepository;
+    BCryptPasswordEncoder passwordEncoder;
+
+    @Autowired
+    public UserServiceImpl(UserRepository userRepository, BCryptPasswordEncoder passwordEncoder) {
+        this.userRepository = userRepository;
+        this.passwordEncoder = passwordEncoder;
+
+    }
+
+    @Override
+    public UserDto createUser(UserDto userDto) {
+        userDto.setUserId(UUID.randomUUID().toString());
+
+        ModelMapper modelMapper = new ModelMapper();
+        modelMapper.getConfiguration().setMatchingStrategy(MatchingStrategies.STRICT);
+        UserEntity userEntity = modelMapper.map(userDto, UserEntity.class);
+        userEntity.setEncryptedPwd(passwordEncoder.encode(userDto.getPwd()));
+
+        userRepository.save(userEntity);
+
+        UserDto returnUserDto = modelMapper.map(userEntity, UserDto.class);
+        return returnUserDto;
+    }
+}
