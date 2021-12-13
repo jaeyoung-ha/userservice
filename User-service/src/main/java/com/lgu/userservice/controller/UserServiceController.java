@@ -14,6 +14,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import javax.servlet.http.HttpServletRequest;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -34,8 +35,12 @@ public class UserServiceController {
     }
 
     @GetMapping("/health_check")
-    public String status() {
-        return String.format("It's Working in User Service on PORT %s", env.getProperty("local.server.port"));
+    public String status(HttpServletRequest request) {
+        return String.format("It's Working in User Service"
+                + ", port(local.server.port)=" + env.getProperty("local.server.port")
+                + ", port(server.port)=" + env.getProperty("server.port")
+                + ", with token secret=" + env.getProperty("token.secret")
+                + ", with token time=" + env.getProperty("token.expiration_time"));
     }
 
     @GetMapping("/welcome")
