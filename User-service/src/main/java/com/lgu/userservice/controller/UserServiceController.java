@@ -83,6 +83,5 @@ public class UserServiceController {
 
         ResponseUser returnValue = new ModelMapper().map(userDto, ResponseUser.class);
         return ResponseEntity.status(HttpStatus.OK).body(returnValue);
-
     }
 }
