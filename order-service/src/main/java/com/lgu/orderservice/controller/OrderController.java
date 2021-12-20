@@ -2,6 +2,7 @@ package com.lgu.orderservice.controller;
 
 import com.lgu.orderservice.dto.OrderDto;
 import com.lgu.orderservice.jpa.OrderEntity;
+import com.lgu.orderservice.messagequeue.KafkaProducer;
 import com.lgu.orderservice.service.OrderService;
 import com.lgu.orderservice.vo.RequestOrder;
 import com.lgu.orderservice.vo.ResponseOrder;
@@ -21,11 +22,13 @@ import java.util.List;
 public class OrderController {
     Environment env;
     OrderService orderService;
+    KafkaProducer kafkaProducer;
 
     @Autowired
-    public OrderController(Environment env, OrderService orderService) {
+    public OrderController(Environment env, OrderService orderService, KafkaProducer kafkaProducer) {
         this.env = env;
         this.orderService = orderService;
+        this.kafkaProducer = kafkaProducer;
     }
 
     @GetMapping("/health_check")
@@ -46,6 +49,9 @@ public class OrderController {
         OrderDto createDto = orderService.createOrder(orderDto);
 
         ResponseOrder responseOrder = mapper.map(createDto, ResponseOrder.class);
+
+        /* send order to the kafka */
+        kafkaProducer.send("product-topic", orderDto);
 
         return ResponseEntity.status(HttpStatus.CREATED).body(responseOrder);
     }

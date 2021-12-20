@@ -16,7 +16,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 @RestController
-@RequestMapping("/catalog-service")
+@RequestMapping("/product-service")
 public class ProductController {
     Environment env;
     ProductService productService;
@@ -32,7 +32,7 @@ public class ProductController {
         return String.format("It's Working in Catalog Service on PORT %s", env.getProperty("local.server.port"));
     }
 
-    @GetMapping("/catalogs")
+    @GetMapping("/products")
     public ResponseEntity<List<ResponseProduct>> getUsers() {
         Iterable<ProductEntity> userList = productService.getAllCatalog();
 
