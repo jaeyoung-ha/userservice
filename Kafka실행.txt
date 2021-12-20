@@ -1,0 +1,12 @@
+
+kafka 경로
+1) zookeeper 실행
+.\bin\windows\zookeeper-server-start.bat .\config\zookeeper.properties
+
+2) kafka 실해
+.\bin\windows\kafka-server-start.bat .\config\server.properties
+
+kafka-connect 경로
+3) connect 실행
+.\bin\windows\connect-distributed.bat .\etc\kafka\connect-distributed.properties
+

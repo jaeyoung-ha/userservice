@@ -1,11 +1,11 @@
-package com.lgu.catalogservice.dto;
+package com.lgu.productservice.dto;
 
 import lombok.Data;
 
 import java.io.Serializable;
 
 @Data
-public class CatalogDto implements Serializable {
+public class ProductDto implements Serializable {
     private String productId;
     private Integer qty;
     private Integer unitPrice;

@@ -1,10 +1,10 @@
-package com.lgu.catalogservice;
+package com.lgu.productservice;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
 
 @SpringBootTest
-class CatalogServiceApplicationTests {
+class ProductServiceApplicationTests {
 
     @Test
     void contextLoads() {

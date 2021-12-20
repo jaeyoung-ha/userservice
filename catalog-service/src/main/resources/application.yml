@@ -4,7 +4,7 @@ server:
 
 spring:
   application:
-    name: catalog-service
+    name: product-service
   h2:
     console:
       enabled: true
@@ -38,4 +38,4 @@ eureka:
 
 logging:
   level:
-    com.lgu.catalogservice: DEBUG
+    com.lgu.productservice: DEBUG

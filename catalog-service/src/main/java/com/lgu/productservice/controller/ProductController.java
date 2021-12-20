@@ -1,8 +1,8 @@
-package com.lgu.catalogservice.controller;
+package com.lgu.productservice.controller;
 
-import com.lgu.catalogservice.jpa.CatalogEntity;
-import com.lgu.catalogservice.service.CatalogService;
-import com.lgu.catalogservice.vo.ResponseCatalog;
+import com.lgu.productservice.jpa.ProductEntity;
+import com.lgu.productservice.service.ProductService;
+import com.lgu.productservice.vo.ResponseProduct;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.env.Environment;
@@ -17,14 +17,14 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/catalog-service")
-public class CatalogController {
+public class ProductController {
     Environment env;
-    CatalogService catalogService;
+    ProductService productService;
 
     @Autowired
-    public CatalogController(Environment env, CatalogService catalogService) {
+    public ProductController(Environment env, ProductService productService) {
         this.env = env;
-        this.catalogService = catalogService;
+        this.productService = productService;
     }
 
     @GetMapping("/health_check")
@@ -33,13 +33,13 @@ public class CatalogController {
     }
 
     @GetMapping("/catalogs")
-    public ResponseEntity<List<ResponseCatalog>> getUsers() {
-        Iterable<CatalogEntity> userList = catalogService.getAllCatalog();
+    public ResponseEntity<List<ResponseProduct>> getUsers() {
+        Iterable<ProductEntity> userList = productService.getAllCatalog();
 
-        List<ResponseCatalog> result = new ArrayList<>();
+        List<ResponseProduct> result = new ArrayList<>();
 
         userList.forEach(v -> {
-            result.add(new ModelMapper().map(v, ResponseCatalog.class));
+            result.add(new ModelMapper().map(v, ResponseProduct.class));
         });
 
         return ResponseEntity.status(HttpStatus.OK).body(result);

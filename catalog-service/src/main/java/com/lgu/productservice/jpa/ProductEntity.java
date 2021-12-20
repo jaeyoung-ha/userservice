@@ -1,4 +1,4 @@
-package com.lgu.catalogservice.jpa;
+package com.lgu.productservice.jpa;
 
 import lombok.Data;
 import org.hibernate.annotations.ColumnDefault;
@@ -10,7 +10,7 @@ import java.util.Date;
 @Data
 @Entity
 @Table(name = "catalog")
-public class CatalogEntity implements Serializable {
+public class ProductEntity implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
